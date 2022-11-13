@@ -116,9 +116,65 @@ Normalize our dataset.
 7.In order to get the predicted values we call the predict() function on the testing data set.
 
 8. Finally, call the functions confusion_matrix(), and the classification_report() in order to evaluate the performance of our classifier.
-
+## Developed by: Balireddy mahalakshmi
+## reg no : 212221240008
 ## PROGRAM 
+~~~~
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+data=pd.read_csv("/content/IRIS (1).csv")
+data.head()
 
-## OUTPUT 
+name=["sepal_length","sepal_width","petal_length","petal_width"]
+x=data.iloc[:,0:4]
+y=data.select_dtypes(include=[object])
+x.head()
+y.head()
+
+from sklearn import preprocessing
+label_encoder=preprocessing.LabelEncoder()
+data['species']=label_encoder.fit_transform(data['species'])
+data['species'].unique()
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.20)
+from sklearn.preprocessing import StandardScaler
+scaler=StandardScaler()
+scaler.fit(x_train)
+x_train=scaler.transform(x_train)
+x_test=scaler.transform(x_test)
+
+from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.neural_network import MLPClassifier
+mlp=MLPClassifier(hidden_layer_sizes=(10,10,10),max_iter=1000)
+mlp.fit(x_train,y_train.values.ravel())
+predictions=mlp.predict(x_test)
+print(predictions)
+
+print(confusion_matrix(y_test,predictions))
+print(classification_report(y_test,predictions))
+~~~~
+
+## OUTPUT :
+## Reading Dataset
+![41](https://user-images.githubusercontent.com/93427286/201530750-d0b1ba28-ed20-49e2-ab1d-dea190724fb4.png)
+## First five values of X
+![42](https://user-images.githubusercontent.com/93427286/201530767-e601a86c-1549-4615-8cbe-a93a519eddac.png)
+## First five  values of Y
+![43](https://user-images.githubusercontent.com/93427286/201530808-2dde53c3-23d5-49ae-940c-8b7e8dcd52d8.png)
+## Unique values in Y
+![44](https://user-images.githubusercontent.com/93427286/201530844-213667a9-2ee9-4d87-a848-4173e4525f47.png)
+## Transforming Categorical into numerical values for Y
+![45](https://user-images.githubusercontent.com/93427286/201530856-be865622-9934-426f-b456-0952d5fb51a6.png)
+## Predictions
+![46](https://user-images.githubusercontent.com/93427286/201530876-8d73e4db-fa54-4242-8e0b-777f84a4cc2e.png)
+## Accuracy
+![47](https://user-images.githubusercontent.com/93427286/201530899-d330bfe0-9bff-4475-ab30-05afc84d696f.png)
+## Confusion Matrix
+![48](https://user-images.githubusercontent.com/93427286/201530914-7562ecb3-ea84-4028-bffb-8ebf2d942188.png)
+## Classification Report
+![49](https://user-images.githubusercontent.com/93427286/201530939-5316eb78-7750-4abf-882d-7f5e79a980bb.png)
 
 ## RESULT
+Thus Implementation-of-MLP-with-Backpropagation problem is executed successfully.
